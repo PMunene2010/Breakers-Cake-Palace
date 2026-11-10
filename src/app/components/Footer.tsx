@@ -50,6 +50,32 @@ export function Footer() {
               <a href="#" className="bg-purple-700 p-2 rounded-full hover:bg-yellow-500 hover:text-purple-900 transition-colors">
                 <Twitter className="h-5 w-5" />
               </a>
+              <a
+                href="https://www.tiktok.com/@breakerscake"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="TikTok: @breakerscake"
+                className="bg-purple-700 p-2 rounded-full hover:bg-yellow-500 hover:text-purple-900 transition-colors"
+              >
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  className="h-5 w-5"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M16.5 3.2c.4 2.2 1.7 3.6 3.8 4.3v3.2a9 9 0 0 1-3.8-1.3v5.5a5.6 5.6 0 1 1-5.6-5.6c.4 0 .8 0 1.2.1v3.3a2.3 2.3 0 1 0 1.2 2V3.2h3.2Z"
+                    fill="#25F4EE"
+                    transform="translate(-1 0.6)"
+                  />
+                  <path
+                    d="M16.5 3.2c.4 2.2 1.7 3.6 3.8 4.3v3.2a9 9 0 0 1-3.8-1.3v5.5a5.6 5.6 0 1 1-5.6-5.6c.4 0 .8 0 1.2.1v3.3a2.3 2.3 0 1 0 1.2 2V3.2h3.2Z"
+                    fill="#FE2C55"
+                    transform="translate(0.7 -0.3)"
+                  />
+                  <path d="M16.5 3.2c.4 2.2 1.7 3.6 3.8 4.3v3.2a9 9 0 0 1-3.8-1.3v5.5a5.6 5.6 0 1 1-5.6-5.6c.4 0 .8 0 1.2.1v3.3a2.3 2.3 0 1 0 1.2 2V3.2h3.2Z" />
+                </svg>
+              </a>
             </div>
           </div>
         </div>

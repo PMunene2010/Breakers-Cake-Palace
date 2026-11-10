@@ -1,5 +1,5 @@
 import { ShoppingBag, Menu } from "lucide-react";
-import { Button } from "@/app/components/ui/button";
+import { OrderNow } from "@/app/components/OrderNow";
 import { useState } from "react";
 
 export function Header() {
@@ -19,7 +19,7 @@ export function Header() {
           <a href="#products" className="text-sm transition-colors hover:text-purple-600">Products</a>
           <a href="#about" className="text-sm transition-colors hover:text-purple-600">About</a>
           <a href="#contact" className="text-sm transition-colors hover:text-purple-600">Contact</a>
-          <Button className="bg-purple-600 hover:bg-purple-700">Order Now</Button>
+          <OrderNow />
         </nav>
 
         {/* Mobile Menu Button */}
@@ -39,7 +39,10 @@ export function Header() {
             <a href="#products" className="text-sm transition-colors hover:text-purple-600">Products</a>
             <a href="#about" className="text-sm transition-colors hover:text-purple-600">About</a>
             <a href="#contact" className="text-sm transition-colors hover:text-purple-600">Contact</a>
-            <Button className="bg-purple-600 hover:bg-purple-700 w-full">Order Now</Button>
+            <OrderNow
+              className="w-full bg-purple-600 hover:bg-purple-700"
+              onOpen={() => setMobileMenuOpen(false)}
+            />
           </nav>
         </div>
       )}

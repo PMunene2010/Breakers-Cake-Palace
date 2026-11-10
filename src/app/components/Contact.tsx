@@ -1,4 +1,4 @@
-import { MapPin, Phone, Clock, Mail } from "lucide-react";
+import { MapPin, Phone, Clock, Mail, MessageCircle } from "lucide-react";
 import { Card, CardContent } from "@/app/components/ui/card";
 
 export function Contact() {
@@ -15,7 +15,7 @@ export function Contact() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
           <Card>
             <CardContent className="flex flex-col items-center text-center pt-6">
               <div className="bg-yellow-100 p-4 rounded-full mb-4">
@@ -27,6 +27,25 @@ export function Contact() {
                 <br />
                 Nairobi, Kenya
               </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="flex flex-col items-center text-center pt-6">
+              <div className="bg-green-100 p-4 rounded-full mb-4">
+                <MessageCircle className="h-6 w-6 text-green-600" />
+              </div>
+              <h3 className="mb-2">WhatsApp</h3>
+              <a
+                href="https://wa.me/254701259311"
+                target="_blank"
+                rel="noreferrer"
+                className="text-sm text-green-700 hover:text-green-800 hover:underline"
+              >
+                0701259311
+                <br />
+                Chat with us
+              </a>
             </CardContent>
           </Card>
 
@@ -51,7 +70,7 @@ export function Contact() {
               </div>
               <h3 className="mb-2">Phone</h3>
               <p className="text-sm text-gray-600">
-                +254 714082689
+                0701259311
                 <br />
                 Call for orders
               </p>
