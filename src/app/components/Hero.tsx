@@ -28,7 +28,7 @@ const celebrations: Celebration[] = [
   {
     name: "Ruracio Cakes",
     description: "Traditional-inspired cake designs for your ruracio and family celebrations.",
-    image: "/images/ruracio-cake.jpeg",
+    image: `${import.meta.env.BASE_URL}images/ruracio-cake.jpeg`,
     photoCredit: "Photo used with permission: Nillavee Cakes and Pastries",
     photoCreditUrl: "https://nillavee.co.ke/product/traditional-cake/",
   },

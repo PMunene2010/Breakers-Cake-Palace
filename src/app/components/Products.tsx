@@ -21,7 +21,7 @@ const products = [
     name: "Ruracio Cakes",
     description: "Traditional-inspired cakes for ruracio and family celebrations.",
     price: "From KSh 10,000",
-    image: "/images/ruracio-cake.jpeg"
+    image: `${import.meta.env.BASE_URL}images/ruracio-cake.jpeg`
   },
   {
     id: 3,
