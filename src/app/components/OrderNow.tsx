@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import emailjs from "@emailjs/browser";
 import { Button } from "@/app/components/ui/button";
 import {
   Dialog,
@@ -17,8 +18,15 @@ type OrderDetails = {
   orderDetails: string;
 };
 
-const MANAGEMENT_EMAIL = "breakers.cakepalace@gmail.com";
 const WHATSAPP_NUMBER = "254701259311";
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+type OrderLinks = {
+  email: string;
+  whatsapp: string;
+};
 
 type OrderNowProps = {
   className?: string;
@@ -26,12 +34,12 @@ type OrderNowProps = {
 };
 
 export function OrderNow({ className, onOpen }: OrderNowProps) {
-  const [orderLinks, setOrderLinks] = useState<{
-    email: string;
-    whatsapp: string;
-  } | null>(null);
+  const [orderLinks, setOrderLinks] = useState<OrderLinks | null>(null);
+  const [whatsappLink, setWhatsappLink] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState("");
+  const [isSending, setIsSending] = useState(false);
 
-  const prepareOrder = (event: FormEvent<HTMLFormElement>) => {
+  const prepareOrder = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const order: OrderDetails = {
@@ -60,12 +68,47 @@ export function OrderNow({ className, onOpen }: OrderNowProps) {
       whatsapp: `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
     };
 
-    setOrderLinks(links);
-    window.open(links.whatsapp, "_blank", "noopener,noreferrer");
-    window.location.href = links.email;
+    setEmailError("");
+    setOrderLinks(null);
+    setWhatsappLink(links.whatsapp);
+
+    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+      setEmailError(
+        "Email delivery is not set up yet. Please contact us on WhatsApp, or try again later.",
+      );
+      return;
+    }
+
+    setIsSending(true);
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          customer_name: order.name,
+          customer_phone: order.phone,
+          occasion: order.occasion,
+          event_date: order.eventDate || "Not provided",
+          order_details: order.orderDetails,
+        },
+        { publicKey: EMAILJS_PUBLIC_KEY },
+      );
+      setOrderLinks(links);
+    } catch (error) {
+      console.error("Unable to send cake order email:", error);
+      setEmailError(
+        "We couldn’t send your order by email. Please try again or continue on WhatsApp; your order has not been emailed.",
+      );
+    } finally {
+      setIsSending(false);
+    }
   };
 
-  const clearOrder = () => setOrderLinks(null);
+  const clearOrder = () => {
+    setOrderLinks(null);
+    setWhatsappLink(null);
+    setEmailError("");
+  };
 
   return (
     <Dialog onOpenChange={(open) => !open && clearOrder()}>
@@ -88,17 +131,10 @@ export function OrderNow({ className, onOpen }: OrderNowProps) {
         {orderLinks ? (
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Your WhatsApp chat and a prefilled email draft have been opened
-              with the same order details.
+              Your order was emailed to management. You can also continue the
+              conversation on WhatsApp:
             </p>
-            <p className="text-sm text-amber-800">
-              The email opens as a draft in your email app; press Send there to
-              deliver it.
-            </p>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Button asChild className="bg-purple-600 hover:bg-purple-700">
-                <a href={orderLinks.email}>Email management</a>
-              </Button>
+            <div className="flex flex-col gap-3">
               <Button asChild className="bg-green-600 hover:bg-green-700">
                 <a
                   href={orderLinks.whatsapp}
@@ -179,12 +215,32 @@ export function OrderNow({ className, onOpen }: OrderNowProps) {
                 className="w-full resize-y rounded-md border border-gray-300 px-3 py-2 font-normal"
               />
             </label>
-            <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700">
-              Continue
+            {emailError && (
+              <div className="space-y-3" role="alert">
+                <p className="text-sm text-red-700">{emailError}</p>
+                {whatsappLink && (
+                  <Button asChild className="w-full bg-green-600 hover:bg-green-700">
+                    <a
+                      href={whatsappLink}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Send order details on WhatsApp
+                    </a>
+                  </Button>
+                )}
+              </div>
+            )}
+            <Button
+              type="submit"
+              disabled={isSending}
+              className="w-full bg-purple-600 hover:bg-purple-700"
+            >
+              {isSending ? "Sending your order..." : "Send order to management"}
             </Button>
             <p className="text-xs text-gray-500">
-              Submitting opens WhatsApp and a prefilled email draft for
-              management. You’ll need to press Send in your email app.
+              Your order details will be emailed to management. You can
+              continue on WhatsApp after sending.
             </p>
           </form>
         )}
