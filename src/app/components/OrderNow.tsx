@@ -24,7 +24,6 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 type OrderLinks = {
-  email: string;
   whatsapp: string;
 };
 
@@ -61,10 +60,7 @@ export function OrderNow({ className, onOpen }: OrderNowProps) {
       .filter(Boolean)
       .join("\n");
 
-    const links = {
-      email: `mailto:${MANAGEMENT_EMAIL}?subject=${encodeURIComponent(
-        `Cake order enquiry - ${order.occasion}`,
-      )}&body=${encodeURIComponent(message)}`,
+    const links: OrderLinks = {
       whatsapp: `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
     };
 
@@ -120,7 +116,7 @@ export function OrderNow({ className, onOpen }: OrderNowProps) {
           Order Now
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-h-[90dvh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-purple-800">Place a cake order</DialogTitle>
           <DialogDescription>
