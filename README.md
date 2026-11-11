@@ -22,7 +22,7 @@
   3. Copy `.env.example` to `.env.local` and fill in the EmailJS service ID,
      template ID, and public key for local development.
   4. For GitHub Pages, add repository Actions secrets named
-     `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID`, and
+     `VITE_EMAILJS` (service ID), `VITE_EMAILJS_TEMPLATE_ID`, and
      `VITE_EMAILJS_PUBLIC_KEY`, then rerun the deploy workflow.
 
   The EmailJS public key is intended for browser use. Do not put private email
