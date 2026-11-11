@@ -32,6 +32,22 @@ type OrderNowProps = {
   onOpen?: () => void;
 };
 
+function getEmailErrorDetails(error: unknown) {
+  if (
+    typeof error === "object" &&
+    error !== null &&
+    "status" in error &&
+    "text" in error &&
+    typeof error.status === "number" &&
+    typeof error.text === "string"
+  ) {
+    return `EmailJS error ${error.status}: ${error.text}`;
+  }
+
+  if (error instanceof Error) return error.message;
+  return "Unexpected error. Check your connection and EmailJS configuration.";
+}
+
 export function OrderNow({ className, onOpen }: OrderNowProps) {
   const [orderLinks, setOrderLinks] = useState<OrderLinks | null>(null);
   const [whatsappLink, setWhatsappLink] = useState<string | null>(null);
@@ -93,7 +109,7 @@ export function OrderNow({ className, onOpen }: OrderNowProps) {
     } catch (error) {
       console.error("Unable to send cake order email:", error);
       setEmailError(
-        "We couldn’t send your order by email. Please try again or continue on WhatsApp; your order has not been emailed.",
+        `We couldn’t email your order, so it has not been sent by email. ${getEmailErrorDetails(error)} You can still send the order through WhatsApp.`,
       );
     } finally {
       setIsSending(false);
