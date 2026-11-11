@@ -32,20 +32,20 @@ export function Header() {
       </div>
 
       {/* Mobile Navigation */}
-      {mobileMenuOpen && (
-        <div className="md:hidden border-t bg-white px-4 py-4">
-          <nav className="flex flex-col gap-4">
-            <a href="#home" className="text-sm transition-colors hover:text-purple-600">Home</a>
-            <a href="#products" className="text-sm transition-colors hover:text-purple-600">Products</a>
-            <a href="#about" className="text-sm transition-colors hover:text-purple-600">About</a>
-            <a href="#contact" className="text-sm transition-colors hover:text-purple-600">Contact</a>
-            <OrderNow
-              className="w-full bg-purple-600 hover:bg-purple-700"
-              onOpen={() => setMobileMenuOpen(false)}
-            />
-          </nav>
-        </div>
-      )}
+      <div
+        className={`${mobileMenuOpen ? "block" : "hidden"} md:hidden border-t bg-white px-4 py-4`}
+      >
+        <nav className="flex flex-col gap-4">
+          <a href="#home" className="text-sm transition-colors hover:text-purple-600">Home</a>
+          <a href="#products" className="text-sm transition-colors hover:text-purple-600">Products</a>
+          <a href="#about" className="text-sm transition-colors hover:text-purple-600">About</a>
+          <a href="#contact" className="text-sm transition-colors hover:text-purple-600">Contact</a>
+          <OrderNow
+            className="w-full bg-purple-600 hover:bg-purple-700"
+            onOpen={() => setMobileMenuOpen(false)}
+          />
+        </nav>
+      </div>
     </header>
   );
 }
